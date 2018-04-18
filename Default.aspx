@@ -593,35 +593,35 @@
                 <div class="col-sm-7 col-md-9">
                   <!-- IMPORTANT: change the email address at the top of the assets/php/mail.php file to the email address that you want this form to send to -->
                   
-                    <!-- form left col -->
-                  <form class="form-style validate-form clearfix" method="POST" role="form">
+                  <!-- form left col -->
+                  <form class="form-style validate-form clearfix" runat="server" role="form" id="contactForm">
 
                     <!-- form left col -->
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input type="text" class="text-field form-control validate-field required" data-validation-type="string" id="form_name" placeholder="Full Name" name="name">
+                        <asp:TextBox runat="server" type="text" class="text-field form-control validate-field required" data-validation-type="string" id="name" placeholder="Full Name" name="name"></asp:TextBox>
                       </div>  
                       <div class="form-group">
-                        <input type="email" class="text-field form-control validate-field required" data-validation-type="email" id="form-email" placeholder="Email Address" name="email">
+                        <asp:TextBox runat="server" type="email" class="text-field form-control validate-field required" data-validation-type="email" id="email" placeholder="Email Address" name="email"></asp:TextBox>
                       </div>
                       <div class="form-group">
-                        <input type="tel" class="text-field form-control validate-field phone" data-validation-type="phone" id="form-contact-number" placeholder="Contact Number" name="contact_number">
+                        <asp:TextBox runat="server" type="tel" class="text-field form-control validate-field required" data-validation-type="phone" id="number" placeholder="Contact Number" name="number"></asp:TextBox>
                       </div>    
-                      <div class="g-recaptcha" data-sitekey="6LfDX1MUAAAAAGugVDwIwvJNDKTMGp4mSq1TusmX"></div>                                
+                      <div class="g-recaptcha" data-sitekey="6LfDX1MUAAAAAGugVDwIwvJNDKTMGp4mSq1TusmX" id="captcha"></div>                                
                     </div><!-- end: form left col -->
 
                     <!-- form right col -->
                     <div class="col-md-6">
                       <div class="form-group">
-                        <textarea placeholder="Message..." class="form-control validate-field required" name="message"></textarea>
+                        <asp:TextBox runat="server" TextMode="multiline" Columns="50" Rows="5" type="text" class="text-field form-control validate-field required" data-validation-type="string" id="message" placeholder="Message ..." name="message"></asp:TextBox>
                       </div> 
                       <div class="form-group">
-                        <img src="assets/images/theme_images/loader-form.GIF" class="form-loader">
-                        <button type="submit" class="btn btn-sm btn-outline-inverse">Submit</button>
-                      </div> 
-                      <div id="result" class="form-group form-general-error-container"></div>           
-                    </div><!-- end: form right col -->
-
+                        <img src="assets/images/theme_images/loader-form.GIF" class="form-loader" />
+                        <asp:Button type="submit" runat="server" Text="Submit" PostBackUrl="Default.aspx" class="btn btn-sm btn-outline-inverse"></asp:Button>
+                        <div class="form-group form-general-error-container"></div>  
+                      </div>   
+                    </div><!-- end: form right col -->                      
+                    
                   </form>
                 </div><!-- end: CONTACT FORM -->
 
@@ -697,6 +697,9 @@
     <!-- Custom functions for this theme -->
     <script src="assets/js/functions.js"></script>
     <script src="assets/js/initialise-functions.js"></script>
+
+    <!--recaptcha api-->
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
 
     <!-- IE9 form fields placeholder fix -->
     <!--[if lt IE 9]>

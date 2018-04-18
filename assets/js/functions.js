@@ -973,9 +973,9 @@ function validate_and_submit_forms(form_object)
         // -------------- end: onChange of each form field --------------
 
         // -------------- reload captcha --------------
-        this_form.find("#form-captcha-refresh").click(function() {
-            reset_captcha(this_form);
-        });
+        //this_form.find("#form-captcha-refresh").click(function() {
+        //    reset_captcha(this_form);
+        //});
 
         // -------------- on Submit of form --------------
         this_form.submit(function(event)
@@ -1027,11 +1027,13 @@ function validate_and_submit_forms(form_object)
             // submit form
             $.ajax({
                 type: 'POST',
-                url: form_action,
-                data: $(this).serialize(),
-                dataType: 'html',
+                url: 'Default.aspx/Submit',
+                data: JSON.stringify({ 'name': $("#name").val(), 'email': $("#email").val(), 'number': $("#number").val(), 'message': $("#message").val(), 'captcha': grecaptcha.getResponse() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
                 success: function (data) 
                 {
+                    data = data.d;
                     // if form submission was processed (successfully or not)
 
                     // hide loader
@@ -1046,7 +1048,7 @@ function validate_and_submit_forms(form_object)
                             message = "Form submitted successfully.";
                             break;
                         case "captcha":
-                            message = "Incorrect text entered. (Case-sensitive)";
+                            message = "You a robot?";
                             break;
                         case "incomplete":
                             message = "Please fill in all required fields.";
@@ -1062,26 +1064,32 @@ function validate_and_submit_forms(form_object)
                     message_field_html += '">'+message+'</div>';
 
                     // incorrect captcha
-                    if (!captcha_success) {
-                        this_form.find("#form-captcha").parent(".form-group").append(message_field_html);
-                        this_form.find("#form-captcha").siblings(".alert").fadeIn("fast");
-                    }
-                    // general message
-                    else {
-                        this_form.find(".form-general-error-container").html(message_field_html).fadeIn("fast", function(){
-                            // if submission was successful, hide message after some time
-                            $(this).delay(10000).fadeOut("fast", function(){ $(this).html(""); });
-                        });
-                    }
+                    //if (!captcha_success) {
+                    //    this_form.find("#form-captcha").parent(".form-group").append(message_field_html);
+                    //    this_form.find("#form-captcha").siblings(".alert").fadeIn("fast");
+                    //}
+                    //// general message
+                    //else {
+                    //    this_form.find(".form-general-error-container").html(message_field_html).fadeIn("fast", function(){
+                    //        // if submission was successful, hide message after some time
+                    //        $(this).delay(10000).fadeOut("fast", function(){ $(this).html(""); });
+                    //    });
+                    //}
 
                     // refresh captcha
-                    reset_captcha(this_form);
+                    //reset_captcha(this_form);
+
+                    this_form.find(".form-general-error-container").html(message_field_html).fadeIn("fast", function () {
+                        // if submission was successful, hide message after some time
+                        $(this).delay(10000).fadeOut("fast", function(){ $(this).html(""); });
+                    });
 
                     // if form submitted successfully, empty fields
                     if (submission_successful == true) this_form.find(".form-control").val("");
                 },
                 error: function (data) 
                 {
+                    console.log(data);
                     // if form submission wasn't processed
 
                     // hide loader
