@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -22,7 +23,7 @@ public partial class assets_Default : System.Web.UI.Page
             try
             {
                 String fromEmail = "mackm@intellitraxx.com";
-                String password = "mko0_PL<,lp-)OKM";
+                String password = ConfigurationManager.AppSettings["dangerwillrobinson"];
                 string subject = "IntelliTraxx: Info/Demo Request";
                 string body = "<table><tr><td style='text-align: center;'><img src='http://www.intellitraxx.com/assets/images/other_images/Logo.png' width='125' /><hr /></td></tr><tr><td><p>";
                 body += "We've received a request for more info or a demo. ";
